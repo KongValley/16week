@@ -20,6 +20,8 @@
       align-items: center;
     }
     .cnt > .row {
+      width: 50%;
+      box-sizing: border-box;
       padding: 6px;
       display: flex;
       flex-direction: row;
@@ -28,11 +30,16 @@
     .number {
       width: 50px;
     }
-    </style>
+    @media all and (max-width: 700px) {
+      .cnt > .row {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container cnt" id="app">
-    <div class="row" style="width: 50%;" v-for="(item,index) in randDay">
+    <div class="row" v-for="(item,index) in randDay">
       <a href="#" class="btn btn-primary number">{{index+1}}</a>
       <div style="flex: 1;padding-left: 20px;">{{item}}</div>
     </div>
