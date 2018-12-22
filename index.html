@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>随机16周</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <style>
+    body,html {
+      height: 100%;
+      background: #fff;
+    }
+    .cnt {
+      background: #fff;
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .cnt > .row {
+      padding: 6px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .number {
+      width: 50px;
+    }
+    </style>
+</head>
+<body>
+  <div class="container cnt" id="app">
+    <div class="row" style="width: 50%;" v-for="(item,index) in randDay">
+      <a href="#" class="btn btn-primary number">{{index+1}}</a>
+      <div style="flex: 1;padding-left: 20px;">{{item}}</div>
+    </div>
+  </div>
+</body>
+
+<script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.22.2/locale/zh-cn.js"></script>
+
+<script>
+let app = new Vue({
+  el: '#app',
+  data() {
+    return {
+      randDay: []
+    }
+  },
+  methods: {
+    init() {
+      const TIME = 16
+      let arr = []
+      let startTime = '20180910'
+      const formatStr = 'YYYY-MM-DD'
+      for(let i = 0 ; i < TIME ; i++) {
+        const rand1 = this.rand(0,6)
+        let rand2 = this.rand(0,6)
+        while (rand1 === rand2) {
+          rand2 = this.rand(0,6)
+        }
+        const day1 = moment(startTime,'YYYYMMDD').add(rand1>rand2 ? rand2 : rand1,'days').format(formatStr)
+        const day2 = moment(startTime,'YYYYMMDD').add(rand1>rand2 ? rand1 : rand2,'days').format(formatStr)
+        const week1 = moment(day1,formatStr).format('dddd')
+        const week2 = moment(day2,formatStr).format('dddd')
+        startTime = moment(startTime,'YYYYMMDD').add(7,'days').format('YYYYMMDD')
+        arr.push(day1 + '  '+ week1+'     '+ day2 + '  '+ week2)
+      }
+      this.randDay = arr
+    },
+    rand(min,max) {
+      const result = Math.floor(Math.random()*(max-min+1))+min
+      return result
+    }
+  },
+  mounted () {
+    this.init()
+  }
+})
+</script>
+</html>
