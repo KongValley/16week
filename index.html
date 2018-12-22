@@ -58,10 +58,10 @@ let app = new Vue({
       let startTime = '20180910'
       const formatStr = 'YYYY-MM-DD'
       for(let i = 0 ; i < TIME ; i++) {
-        const rand1 = this.rand(0,6)
-        let rand2 = this.rand(0,6)
+        const rand1 = this.rand(0,4)
+        let rand2 = this.rand(0,4)
         while (rand1 === rand2) {
-          rand2 = this.rand(0,6)
+          rand2 = this.rand(0,4)
         }
         const day1 = moment(startTime,'YYYYMMDD').add(rand1>rand2 ? rand2 : rand1,'days').format(formatStr)
         const day2 = moment(startTime,'YYYYMMDD').add(rand1>rand2 ? rand1 : rand2,'days').format(formatStr)
